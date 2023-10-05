@@ -95,4 +95,25 @@ employes.forEach((element, index) => console.log(index + " " + element.nom));
 // }
 
 
+console.log("----------------------------");
 
+
+
+
+
+//Fonctions
+
+
+//Declaration de fonction
+function bonjourEmploye(nom){
+
+    //Query selector va chercher le sélecteur css directement appelé (à l'identique du css)
+    const employeName = document.querySelector("#employeName");
+    employeName.innerText = nom;
+}
+
+//Appel de la fonction
+bonjourEmploye("bla");
+
+//Afficher le nom du 2e employe du tableau
+bonjourEmploye(employes[1].nom);
