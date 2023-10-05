@@ -22,3 +22,10 @@ console.log(colorArray);
 
 // les HTMLElements
 let prenom = "Paul";
+const user = document.getElementById("user");
+
+//console.log(user); ne pas oublier le defer dans la balise script pour cahrger le script après l'html
+
+// console.dir() ou cdi permet de voir tous les éléments de la variable en détail
+console.dir(user);
+user.innerText = prenom;
