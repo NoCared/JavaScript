@@ -105,11 +105,11 @@ console.log("----------------------------");
 
 
 //Declaration de fonction
-function bonjourEmploye(nom){
+function bonjourEmploye(nom, message = "Bonjour"){
 
     //Query selector va chercher le sélecteur css directement appelé (à l'identique du css)
-    const employeName = document.querySelector("#employeName");
-    employeName.innerText = nom;
+    const employeName = document.querySelector("#employeName span");
+    employeName.innerText = message + " " + nom;
 }
 
 //Appel de la fonction
@@ -117,3 +117,9 @@ bonjourEmploye("bla");
 
 //Afficher le nom du 2e employe du tableau
 bonjourEmploye(employes[1].nom);
+
+//JAVASCRIPT naze => on peut accèder à la variable de la fonction sans etre dans le scope
+//A EVITER ->
+//                          employeName.innerText = "Joe";
+
+bonjourEmploye(employes[1].nom,"Bonsoir");
