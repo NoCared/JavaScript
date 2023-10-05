@@ -29,3 +29,15 @@ const user = document.getElementById("user");
 // console.dir() ou cdi permet de voir tous les éléments de la variable en détail
 console.dir(user);
 user.innerText = prenom;
+//user.style.backgroundColor = "Green"; // Pas bien du tout -> ajoute la propriété dans le html
+user.classList.add("green"); // Ce qu'il faut faire -> passer par le css
+
+user.classList.remove("lambda");
+
+// event sur un HTMLElement
+user.addEventListener("click", (event) => { 
+    console.dir(event);
+    user.classList.toggle("green");
+    user.classList.toggle("yellow");
+});
+
