@@ -35,9 +35,64 @@ user.classList.add("green"); // Ce qu'il faut faire -> passer par le css
 user.classList.remove("lambda");
 
 // event sur un HTMLElement
-user.addEventListener("click", (event) => { 
+user.addEventListener("click", (event) => {
     console.dir(event);
     user.classList.toggle("green");
     user.classList.toggle("yellow");
 });
+
+
+
+
+// Declaration d'objet
+const employe = {
+    nom: "Bob",
+    poste: "comptable",
+    date_embauche: "2021-08-23",
+    rappel: () => alert("Au boulot !"),
+};
+
+console.log(employe.nom);
+
+//employe.rappel();
+
+
+const employes = [
+    {
+        nom: "Bob",
+        poste: "comptable",
+        date_embauche: "2021-08-23",
+    },
+    {
+        nom: "Patrick",
+        poste: "responsable camping",
+        date_embauche: "2018-08-23",
+    },
+    {
+        nom: "M. Crabe",
+        poste: "chef",
+        date_embauche: "2023-08-23",
+    },
+];
+
+let ctr = 0;
+while (ctr < employes.length) {
+    console.log(employes[ctr].nom);
+    ctr++;
+}
+
+for (let i = 0; i < employes.length; i++) {
+    console.log(employes[i].nom);
+}
+
+employes.forEach((element, index) => console.log(index + " " + element.nom));
+
+////La boucle la plus rapide :
+// let len = employes.length;
+// while (len--)
+// {
+//     console.log(employes[len].nom);
+// }
+
+
 
