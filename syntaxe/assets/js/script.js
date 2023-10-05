@@ -105,7 +105,7 @@ console.log("----------------------------");
 
 
 //Declaration de fonction
-function bonjourEmploye(nom, message = "Bonjour"){
+function bonjourEmploye(nom, message = "Bonjour") {
 
     //Query selector va chercher le sélecteur css directement appelé (à l'identique du css)
     const employeName = document.querySelector("#employeName span");
@@ -122,4 +122,26 @@ bonjourEmploye(employes[1].nom);
 //A EVITER ->
 //                          employeName.innerText = "Joe";
 
-bonjourEmploye(employes[1].nom,"Bonsoir");
+bonjourEmploye(employes[1].nom, "Bonsoir");
+
+
+
+
+
+
+//Fonctions Fléchées
+
+
+//                          Déclaration
+
+//const affichePoste =  (employe) => { console.log(employe.poste); };
+//          Si un seul argument, pas besoin des parenthèses
+//const affichePoste =  employe => { console.log(employe.poste); }; 
+//          Si une seule ligne pour le corps
+//const affichePoste =  employe => console.log(employe.poste); 
+
+
+const affichePoste =  employe => console.log(employe.poste); 
+
+//Affiche poste
+affichePoste(employes[0]);
