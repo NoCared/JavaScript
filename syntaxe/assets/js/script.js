@@ -12,3 +12,13 @@ const maVariableConst = "Chaine de caractere";
 
 
 const colorArray = ["blue", "red", "green"];
+//colorArray = ["blue", "red", "green", "orange"]; ne marche pas car on réassigne une valeur
+colorArray.push("yellow");// push marche car il n'y a pas de redéfinition ni de réassignation
+colorArray[1] = "green";// on peut modifier un élément comme cela
+
+console.log(colorArray);
+
+
+
+// les HTMLElements
+let prenom = "Paul";
