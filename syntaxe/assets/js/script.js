@@ -145,3 +145,22 @@ const affichePoste =  employe => console.log(employe.poste);
 
 //Affiche poste
 affichePoste(employes[0]);
+
+
+
+
+
+
+// innerText vs innerHTML
+
+const inner = document.getElementsByClassName("inner")[0];
+console.dir(inner);
+inner.innerHTML = "<button>Bonjour</button>";
+//Faille de sécurité
+inner.innerHTML = "<script>alert(Bonjour);</script>";
+inner.innerText = "<script>alert(Bonjour);</script>";
+
+
+const textExtraPourLorem = " || mon bout de Lorem en plus || ";
+inner.innerText = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam obcaecati autem quasi commodi aperiam quidem et
+tempora ${textExtraPourLorem} neque ipsa voluptatem voluptate adipisci eveniet accusamus id maiores consequatur, dicta vel non!`;
