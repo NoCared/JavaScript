@@ -51,6 +51,7 @@ delete (divNewElem);
 delete (spanNewElem);
 
 
+
 // creation d'une classe et utilisation du constructor
 class NewObjectHTML {
     tag = "";// ou tag;
@@ -76,6 +77,17 @@ class NewObjectHTML {
         document.body.append(createdObject);
     };
 }
-
-
 const spanElem = new NewObjectHTML("span", "mon texte en span");
+
+// heritage de classe
+class SuperNewObjectHTML extends NewObjectHTML {
+    value;
+    name;
+    type;
+
+
+    constructor(tagParam, textParam = "", idParam = "") {
+        super(tagParam, textParam = "", idParam = "");
+    }
+}
+const input = new SuperNewObjectHTML("input", "");

@@ -1,0 +1,18 @@
+{
+  "name": "mon_premier_serveur",
+  "version": "1.0.0",
+  "description": "creation d'un serveur à partir de nodejs et express",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "server",
+    "express"
+  ],
+  "author": "blabla",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
