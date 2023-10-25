@@ -11,23 +11,46 @@ const express = require('express');
 // import du module http (déja présent avec express) pour effectuer, entre mon serveur et
 // mes clients, les requetes HTTP
 const http = require('http');
-
+const fs = require('fs');
 
 const app = express();
-
-// dans le but de cloisonner mon application coté serveur et les ressources
-// destinées à mes clients  je cré
-app.use(express.static('public'));
-
-app.get('/', (req,res)=>{
-    res.sendFile('index.html',{root: __dirname});
-});
-
 
 const hostName = '127.0.0.1';
 const port = 8000;
 const server = http.Server(app);
-server.listen(port,hostName,()=>{
+const io = require('socket.io')(server);
+let userLogins;
+fs.readFile("./data/users.json",(err,txt)=>{
+    console.dir("error " + err);
+    userLogins = JSON.parse(txt);
+    console.dir(userLogins);
+
+});
+
+io.on('connection', client => {
+    client.on('init', data => { 
+        userLogins.user.forEach(element => {
+            if (element.login === data.login && element.pwd === data.pwd)
+            {
+                client.emit("success",{"id":client.id});
+            }
+        });
+        // j'ai besoin d'accéder à user.json confronter mes logs et pwd
+     });
+    client.on('disconnect', () => { /* … */ });
+});
+
+// dans le but de cloisonner mon application coté serveur et les ressources
+// destinées à mes clients  je crée un dossier public ou www
+app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+    res.sendFile('index.html', { root: __dirname });
+});
+
+
+
+server.listen(port, hostName, () => {
     console.log(`serveur running http://${hostName}:${port}`);
 });
 
