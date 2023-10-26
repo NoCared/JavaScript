@@ -37,6 +37,17 @@ io.on('connection', client => {
         });
         // j'ai besoin d'accéder à user.json confronter mes logs et pwd
      });
+     client.on('newMessage',(data)=>
+     {
+        let tmpMessages;
+        fs.readFile("./data/messages.json",(err,dataMsg)=>{
+            tmpMessages = JSON.parse(dataMsg);
+            tmpMessages.messages.push(data);
+            fs.writeFile("./data/messages.json",JSON.stringify(tmpMessages),(err)=>{
+                
+            });
+        });
+     });
     client.on('disconnect', () => { /* … */ });
 });
 
