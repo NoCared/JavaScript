@@ -2,11 +2,18 @@
     "user": [
         {
             "login":"Paul",
-            "pwd":"azerty"
+            "pwd":"azerty",
+            "id": "11111"
         },
         {
             "login":"Blabla",
-            "pwd":"blabla"
+            "pwd":"blabla",
+            "id": "22222"
+        },
+        {
+            "login":"oui",
+            "pwd":"oui",
+            "id": "33333"
         }
     ]
 }

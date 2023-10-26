@@ -20,7 +20,30 @@ const port = 8000;
 const server = http.Server(app);
 const io = require('socket.io')(server);
 let userLogins;
-fs.readFile("./data/users.json",(err,txt)=>{
+
+const getNameFromID = (id) =>{
+    let name ="";
+    userLogins.user.forEach(element => {
+        if (element.id === id)
+        {
+            name = element.login;
+        }
+    });
+    return name;
+}
+const getIDFromName = (name) =>{
+    let id ="";
+    userLogins.user.forEach(element => {
+        if (element.name === name)
+        {
+            id = element.id;
+        }
+    });
+    return id;
+}
+
+
+fs.readFile("./data/users.json", (err, txt) => {
     console.dir("error " + err);
     userLogins = JSON.parse(txt);
     console.dir(userLogins);
@@ -28,26 +51,39 @@ fs.readFile("./data/users.json",(err,txt)=>{
 });
 
 io.on('connection', client => {
-    client.on('init', data => { 
+    client.on('init', data => {
         userLogins.user.forEach(element => {
-            if (element.login === data.login && element.pwd === data.pwd)
-            {
-                client.emit("success",{"id":client.id});
+            if (element.login === data.login && element.pwd === data.pwd) {
+                client.emit("success", { "id": element.login });
             }
         });
         // j'ai besoin d'accéder à user.json confronter mes logs et pwd
-     });
-     client.on('newMessage',(data)=>
-     {
+    });
+
+    client.on("getMessages", () => {
         let tmpMessages;
-        fs.readFile("./data/messages.json",(err,dataMsg)=>{
+        fs.readFile("./data/messages.json", (err, dataMsg) => {
+            tmpMessages = JSON.parse(dataMsg);
+            client.emit("sendGlobalMessages", { data: tmpMessages });
+        });
+    });
+
+    client.on('newMessage', (data) => {
+        let tmpMessages;
+        let name = data.id;
+        data.id = getIDFromName(name);
+
+        fs.readFile("./data/messages.json", (err, dataMsg) => {
             tmpMessages = JSON.parse(dataMsg);
             tmpMessages.messages.push(data);
-            fs.writeFile("./data/messages.json",JSON.stringify(tmpMessages),(err)=>{
-                
+            fs.writeFile("./data/messages.json", JSON.stringify(tmpMessages), (err) => {
+
             });
+            data.id = name;
+            client.broadcast.emit("newGlobalMessage", { "data": data });
         });
-     });
+    });
+
     client.on('disconnect', () => { /* … */ });
 });
 
