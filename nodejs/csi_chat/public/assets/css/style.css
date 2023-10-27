@@ -1,28 +1,13 @@
-.form-group, h1 {
+.form-group,
+h1 {
     padding: 1rem;
 }
-.btn-primary{
+
+h1 {
+    text-align: center;
+}
+
+.btn-primary {
     margin: 1rem;
 }
 
-#chatOrg{
-    height: 100vh;
-    width: 100vw;
-
-    display: flex;
-}
-#chatOrg #message{
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-}
-
-#list-group{
-    height: 100%;
-    width: 40%;
-}
-#contentMessage{
-    height: 60%;
-}
-#textBox{
-}

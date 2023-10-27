@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/chat-style.css">
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -27,16 +27,16 @@
     <div id="chatOrg">
         <section id="list-group">
             <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active">Cras justo odio</a>
-                <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-                <a href="#" class="list-group-item list-group-item-action disabled">Morbi leo risus</a>
+                <!-- <div class="list-group-item">Cras justo odio</div>
+                <div class="list-group-item">Dapibus ac facilisis in</div>
+                <div class="list-group-item disabled">Morbi leo risus</div> -->
             </div>
         </section>
 
         <div id="message">
             <section id="contentMessage">
                 <div class="list-group" id="displayMessages">
-                    
+
                 </div>
             </section>
 
@@ -45,10 +45,50 @@
                 <div id="editor">
                     <p>Hello World!</p>
                 </div>
-                <button id="sendMessage">Send Message</button>
+                <div id="buttonSendDiv">
+                    <button id="sendMessage">Send Message</button>
+                </div>
             </section>
         </div>
     </div>
+  
+  <!-- Votre modale existante -->
+  <div class="modal fade" id="modalSend" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Private message to</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Send</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Votre modale existante -->
+  <div class="modal fade" id="modalReceive" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Private message from</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <input type="text" readonly="" class="form-control-plaintext" id="answer" value="">
+      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

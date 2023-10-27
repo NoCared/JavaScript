@@ -20,33 +20,35 @@ const port = 8000;
 const server = http.Server(app);
 const io = require('socket.io')(server);
 let userLogins;
+let userLogged = [];
 
-const getNameFromID = (id) =>{
-    let name ="";
-    userLogins.user.forEach(element => {
-        if (element.id === id)
+const getRealIDFromName = (name)=>
+{
+    let id = null;
+    userLogged.forEach(element =>{
+        if (name === element.name)
         {
-            name = element.login;
-        }
-    });
-    return name;
-}
-const getIDFromName = (name) =>{
-    let id ="";
-    userLogins.user.forEach(element => {
-        if (element.name === name)
-        {
-            id = element.id;
+            id = element.relatedId;
         }
     });
     return id;
+}
+const getNameFromRelatedID = (id)=>
+{
+    let name = null;
+    userLogged.forEach(element =>{
+        if (id === element.relatedId)
+        {
+            name = element.name;
+        }
+    });
+    return name;
 }
 
 
 fs.readFile("./data/users.json", (err, txt) => {
     console.dir("error " + err);
     userLogins = JSON.parse(txt);
-    console.dir(userLogins);
 
 });
 
@@ -54,10 +56,24 @@ io.on('connection', client => {
     client.on('init', data => {
         userLogins.user.forEach(element => {
             if (element.login === data.login && element.pwd === data.pwd) {
-                client.emit("success", { "id": element.login });
+                client.emit("success", { "id": element.id });
             }
         });
         // j'ai besoin d'accéder à user.json confronter mes logs et pwd
+    });
+
+    client.on("connected", (data) => {
+        let isAlreadyLogged = false;
+        userLogged.forEach(element => {
+            if (element.id === data.idName) {
+                element.relatedId = data.realId;
+                isAlreadyLogged = true;
+            }
+        });
+
+        if (isAlreadyLogged === false) {
+            userLogged.push({ name: data.idName, relatedId: data.realId });
+        }
     });
 
     client.on("getMessages", () => {
@@ -68,10 +84,31 @@ io.on('connection', client => {
         });
     });
 
+    client.on("sendPrivateMessage", (data) => {
+
+        let receiveId = getRealIDFromName(data.idReceiver);
+        if (receiveId != null){
+            client.to(receiveId).emit("newPrivateMessageResponse", {
+                content: data.content,
+                fromUser: getNameFromRelatedID(client.id)
+            });
+        }
+    });
+
+    client.on("getUsers", () => {
+        let tmpUsers;
+        fs.readFile("./data/users.json", (err, dataMsg) => {
+            tmpUsers = JSON.parse(dataMsg);
+            let userList = [];
+            tmpUsers.user.forEach(element => {
+                userList.push({ id: element.id });
+            });
+            client.emit("currentUsers", { userList: userList });
+        });
+    });
+
     client.on('newMessage', (data) => {
         let tmpMessages;
-        let name = data.id;
-        data.id = getIDFromName(name);
 
         fs.readFile("./data/messages.json", (err, dataMsg) => {
             tmpMessages = JSON.parse(dataMsg);
@@ -79,7 +116,6 @@ io.on('connection', client => {
             fs.writeFile("./data/messages.json", JSON.stringify(tmpMessages), (err) => {
 
             });
-            data.id = name;
             client.broadcast.emit("newGlobalMessage", { "data": data });
         });
     });
